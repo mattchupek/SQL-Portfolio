@@ -1,0 +1,28 @@
+/*
+-- Order items by price
+SELECT item_name, price
+FROM superstore
+ORDER BY price;
+
+
+
+-- Find average price per category, order by highest.
+SELECT category, avg(price)
+FROM superstore
+GROUP BY category
+ORDER BY avg(price) desc;
+
+
+
+-- Find cheapest item in Kitchen Supplies
+SELECT item_name, min(price)
+FROM superstore
+WHERE category = 'Kitchen Supplies'
+GROUP BY item_name ASC LIMIT 1;
+
+*/
+
+-- How many air purifiers are in stock?
+SELECT item_name, stock_quantity
+FROM superstore
+WHERE item_name = 'Air Purifier';
