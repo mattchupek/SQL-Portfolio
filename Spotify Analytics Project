@@ -37,6 +37,15 @@ artist_name
 FROM BIT_DB.spotifydata
 GROUP BY artist_name, track_name;
 
+  #Then I determined which artists had a popularity lower than the average using a subquery.
+SELECT artist_name, popularity
+FROM BIT_DB.Spotifydata
+WHERE popularity < (
+    SELECT avg(popularity)
+    FROM spotifydata
+    )
+ORDER BY popularity desc;
+
   #Then I determined which artists had a popularity of at least 90.
 SELECT artist_name, popularity
 FROM BIT_DB.Spotifydata
