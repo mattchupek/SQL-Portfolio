@@ -102,10 +102,14 @@ INSERT INTO players(Player,Team,Conference,Date,Position,Height,Weight,Age,Draft
   GROUP BY TEAM
   HAVING Seasons_in_league > 10;
     
---Create chart that shows Player, Position, Age, Title. Title should be either "Rookie" or "Veteran" depending on status of player.
-   SELECT Player, Position, Age, 
-   CASE when Seasons_in_league > 1 THEN "Veteran"
-   ELSE "Rookie"
-   END "Title"
-   FROM Players
-   ORDER BY age;
+--Create a list that shows Player, Position, Age, Team, & Experience. Experience should be either "Rookie" or "Veteran" depending on status of player.
+--And order by age with the oldest players first.
+   SELECT 
+   player
+   ,position
+   ,age
+   ,CASE WHEN seasons_in_league > 1 THEN "Veteran" ELSE "Rookie" END "Experience"
+
+   FROM players p
+   JOIN team t ON t.team_id = p.team_id
+   ORDER BY age desc;
