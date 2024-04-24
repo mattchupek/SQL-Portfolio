@@ -5,17 +5,16 @@ I also used functions like CASE, HAVING, GROUP BY, and ORDER BY. I began by crea
 */
 
 CREATE TABLE fortune_companies (
-    company_id INTEGER PRIMARY KEY,
-    company_name TEXT,
-    industry TEXT,
-    revenue REAL,
-    employees INTEGER,
-    healthcare_benefits BIT,
-    paid_time_off_days INTEGER,
-    maternity_leave_weeks INTEGER,
-    avg_employee_tenure REAL
+	company_id INTEGER PRIMARY KEY,
+  company_name TEXT,
+  industry TEXT,
+  revenue REAL,
+  employees INTEGER,
+  healthcare_benefits BIT,
+  paid_time_off_days INTEGER,
+  maternity_leave_weeks INTEGER,
+  avg_employee_tenure REAL
 );
-
 INSERT INTO fortune_companies (company_name, industry, revenue, employees, healthcare_benefits, paid_time_off_days, maternity_leave_weeks, avg_employee_tenure)
 VALUES
     ('Apple Inc.', 'Technology', 365.7, 147000, 1, 20, 12, 4.5),
@@ -62,57 +61,60 @@ VALUES
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
 
-
---Q1:Group companies by number of employees and put them in structured tiers.
-
-SELECT company_name, 
-CASE 
-WHEN employees >=2000000 THEN '2 million+'
-WHEN employees >=1000000 THEN '1 million+'
-WHEN employees >=100000 THEN '100k+'
-WHEN employees >=10000 THEN '10k+'
-WHEN employees >=5000 THEN '5k+'
-WHEN employees >=4000 THEN '4k+'
-WHEN employees >=3000 THEN '3k+'
-WHEN employees >=2000 THEN '2k+'
-WHEN employees >=1000 THEN '1k+'
-ELSE 'Under 1k' END 'employee_count'
+#Q1. Group companies by number of employees and put them in structured tiers.
+SELECT 
+	company_name 
+	,CASE 
+		WHEN employees >=2000000 THEN '2 million+'
+		WHEN employees >=1000000 THEN '1 million+'
+		WHEN employees >=100000 THEN '100k+'
+		WHEN employees >=10000 THEN '10k+'
+		WHEN employees >=5000 THEN '5k+'
+		WHEN employees >=4000 THEN '4k+'
+		WHEN employees >=3000 THEN '3k+'
+		WHEN employees >=2000 THEN '2k+'
+		WHEN employees >=1000 THEN '1k+'
+		ELSE 'Under 1k' 
+	END 'employee_count'
 FROM fortune_companies
 GROUP BY employees
 ORDER BY employees DESC;
 
-
---Q2:Assign all the companies in the Healthcare industry as "mother friendly workplace", "acceptable", or "no bueno" based on the maternity leave offered. 
-
-SELECT company_name,
-CASE 
-	WHEN maternity_leave_weeks >= 10 THEN 'mother friendly workplace'
-	WHEN maternity_leave_weeks >= 8 THEN 'acceptable'
-  ELSE 'no bueno'
-END as mother_friendliness
+#Q2. Assign all the companies in the Healthcare industry as "mother friendly workplace", "acceptable", or "none" based on the maternity leave offered. 
+SELECT 
+	company_name
+	,CASE 
+		WHEN maternity_leave_weeks >= 10 THEN 'mother friendly workplace'
+		WHEN maternity_leave_weeks >= 8 THEN 'acceptable'
+  	ELSE 'none'
+	END mother_friendliness
 FROM fortune_companies
 ORDER BY maternity_leave_weeks DESC;
 
-
---Q3:Which industries have an average revenue of at least $200 Billion, and what are their average revenues?
-
-SELECT industry, ROUND(AVG(revenue),1) as average_revenue
+#Q3. Which industries have an average revenue of at least $200 Billion, and what are their average revenues?
+SELECT 
+	industry
+	,ROUND(AVG(revenue),1) as average_revenue
 FROM fortune_companies
 GROUP BY industry
 HAVING average_revenue >=200
 ORDER BY average_revenue desc;
 
 
---Q4:Which companies have healthcare benefits and at least 20 paid time off days?
-
-SELECT company_name, paid_time_off_days
+#Q4. Which companies have healthcare benefits and at least 20 paid time off days?
+SELECT 
+	company_name
+	,paid_time_off_days
 FROM fortune_companies
 WHERE healthcare_benefits = 1
-AND paid_time_off_days >=20
-ORDER BY paid_time_off_days desc, company_name;
+	AND paid_time_off_days >=20
+ORDER BY 
+	paid_time_off_days desc
+	,company_name;
 
-
---Q5:Which company in the Healthcare industry has the least revenue, and what's their revenue? 
-SELECT company_name, MIN(revenue)
+#Q5. Which company in the Healthcare industry has the least revenue, and what's their revenue? 
+SELECT 
+	company_name
+	,MIN(revenue)
 FROM fortune_companies
 WHERE industry = 'Healthcare';
