@@ -27,45 +27,45 @@ INSERT INTO store (id, item, category, price, sales) VALUES
 (19, 'banana', 'fruits & vegetables', 3.24, 345),
 (20, 'chocolate brownie', 'pantry', 6.97, 450);
 
-
-#Q2. Which is the most expensive item and how many sales were made?
+#Q1.(Subquery) What drinks sold lower than the average drink sales?
 SELECT 
 	item
-      ,price
-      ,sales
-FROM store
-ORDER BY price desc LIMIT 1;
-A: steak
-
-#Q3. What is the average price of items in the 'pantry' category? [Aggregate]
-SELECT AVG(price) 'pantry price'
-FROM store
-WHERE category = 'pantry';
-A: $6.56
-
-#Q4. What is the total amount of items sold? [Aggregate]
-SELECT SUM(sales) 'total sales'
-FROM store;
-A: 8253
-
-#Q5. What are the top 5 items that bought in the most sales? 
-SELECT item, category, price, sales
-FROM store
-ORDER BY sales desc
-LIMIT 5;
-A: canned tuna, mochi, potato chips, cereal, ice cream
-
-#Q6. What drinks sold lower than the average drink sales? [Aggregates and Subquery]
-SELECT 
-item
-,SUM(price * sales)
+	,SUM(price * sales)
 FROM store
 WHERE category = 'drinks'
-AND price * sales < (
+	AND price * sales < (
         SELECT AVG(price * sales) 
         FROM store
         WHERE category = 'drinks'
         )
 GROUP BY item
 ;
+
+#Q2. What are the top 5 items that bought in the most sales? 
+SELECT 
+	item
+	,category
+	,price
+	,sales
+FROM store
+ORDER BY sales desc LIMIT 5;
+
+#Q3.(Aggregate) What is the average price of items in the 'pantry' category?
+SELECT 
+	AVG(price) 'pantry price'
+FROM store
+WHERE category = 'pantry';
+
+#Q4. (Aggregate) What is the total amount of items sold?
+SELECT 
+	SUM(sales) 'total sales'
+FROM store;
+
+#Q5. Which is the most expensive item and how many sales were made?
+SELECT 
+	item
+  ,price
+	,sales
+FROM store
+ORDER BY price desc LIMIT 1;
 
