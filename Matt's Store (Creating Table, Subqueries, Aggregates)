@@ -1,61 +1,61 @@
 CREATE TABLE store (
       id INTEGER PRIMARY KEY, 
-      item TEXT, 
-      category TEXT, 
- 		  price DECIMAL(10,2), 
+      item VARCHAR(100), 
+      category VARCHAR(100), 
+      price DECIMAL(10,2), 
       sales INTEGER
 );
 
-INSERT INTO store VALUES (1, 'soda', 'drinks', 0.99, 470);
-INSERT INTO store VALUES (2, 'cereal', 'pantry', 5.99, 627);
-INSERT INTO store VALUES (3, 'mochi', 'frozen', 11.85, 832);
-INSERT INTO store VALUES (4, 'potato chips', 'pantry', 3.99, 629);
-INSERT INTO store VALUES (5, 'apple juice', 'drinks', 2.35, 165);
-INSERT INTO store VALUES (6, 'canned tuna', 'pantry', 6.78, 875);
-INSERT INTO store VALUES (8, 'ice cream', 'frozen', 12.99, 543);
-INSERT INTO store VALUES (9, 'celery', 'fruits & vegetables', 3.86, 352);
-INSERT INTO store VALUES (10, 'carrot', 'fruits & vegetables', 3.10, 487);
-INSERT INTO store VALUES (11, 'energy drink', 'drinks', 4.42, 254);
-INSERT INTO store VALUES (12, 'hot sauce', 'pantry', 5.55, 364);
-INSERT INTO store VALUES (13, 'broccoli', 'fruits & vegetables', 5.30, 146);
-INSERT INTO store VALUES (14, 'sparkling water', 'drinks', 2.99, 356);
-INSERT INTO store VALUES (15, 'steak', 'frozen', 23.97, 147);
-INSERT INTO store VALUES (16, 'canned soup', 'pantry', 6.23, 472);
-INSERT INTO store VALUES (17, 'ketchup', 'pantry', 4.67, 385);
-INSERT INTO store VALUES (18, 'noodles', 'pantry', 12.26, 354);
-INSERT INTO store VALUES (19, 'banana', 'fruits & vegetables', 3.24, 345);
-INSERT INTO store VALUES (20, 'chocolate brownie', 'pantry', 6.97, 450);
+INSERT INTO store (id, item, category, price, sales) VALUES
+(1, 'soda', 'drinks', 0.99, 470),
+(2, 'cereal', 'pantry', 5.99, 627),
+(3, 'mochi', 'frozen', 11.85, 832),
+(4, 'potato chips', 'pantry', 3.99, 629),
+(5, 'apple juice', 'drinks', 2.35, 165),
+(6, 'canned tuna', 'pantry', 6.78, 875),
+(8, 'ice cream', 'frozen', 12.99, 543),
+(9, 'celery', 'fruits & vegetables', 3.86, 352),
+(10, 'carrot', 'fruits & vegetables', 3.10, 487),
+(11, 'energy drink', 'drinks', 4.42, 254),
+(12, 'hot sauce', 'pantry', 5.55, 364),
+(13, 'broccoli', 'fruits & vegetables', 5.30, 146),
+(14, 'sparkling water', 'drinks', 2.99, 356),
+(15, 'steak', 'frozen', 23.97, 147),
+(16, 'canned soup', 'pantry', 6.23, 472),
+(17, 'ketchup', 'pantry', 4.67, 385),
+(18, 'noodles', 'pantry', 12.26, 354),
+(19, 'banana', 'fruits & vegetables', 3.24, 345),
+(20, 'chocolate brownie', 'pantry', 6.97, 450);
 
-#1. Display store database by order of sales.
-SELECT * 
-FROM store 
-ORDER BY sales asc;
 
-#2. Which is the most expensive item and how many sales were made?
-SELECT item, price, sales
+#Q2. Which is the most expensive item and how many sales were made?
+SELECT 
+	item
+      ,price
+      ,sales
 FROM store
 ORDER BY price desc LIMIT 1;
 A: steak
 
-#3. What is the average price of items in the 'pantry' category? [Aggregate]
+#Q3. What is the average price of items in the 'pantry' category? [Aggregate]
 SELECT AVG(price) 'pantry price'
 FROM store
 WHERE category = 'pantry';
 A: $6.56
 
-#4. What is the total amount of items sold? [Aggregate]
+#Q4. What is the total amount of items sold? [Aggregate]
 SELECT SUM(sales) 'total sales'
 FROM store;
 A: 8253
 
-#5. What are the top 5 items that bought in the most sales? 
+#Q5. What are the top 5 items that bought in the most sales? 
 SELECT item, category, price, sales
 FROM store
 ORDER BY sales desc
 LIMIT 5;
 A: canned tuna, mochi, potato chips, cereal, ice cream
 
-#6. What drinks sold lower than the average drink sales? [Aggregates and Subquery]
+#Q6. What drinks sold lower than the average drink sales? [Aggregates and Subquery]
 SELECT 
 item
 ,SUM(price * sales)
