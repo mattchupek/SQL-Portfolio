@@ -1,0 +1,65 @@
+CREATE TABLE students (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(100),
+  last_name VARCHAR(100)
+);
+CREATE TABLE assignments (
+  title VARCHAR(100),
+  grade INT,
+  student_id INT,
+  FOREIGN KEY (student_id) REFERENCES students(id)
+);
+INSERT INTO students (first_name, last_name) VALUES 
+  ('Martin', 'James'),
+  ('Lebron', 'Jordan'),
+  ('Gabriela', 'Jackson'),
+  ('Reggie', 'Jackson'),
+  ('Amanda', 'Barnes'),
+  ('Prince', 'West'),
+  ('Shohei', 'Ohtani');
+
+INSERT INTO assignments (student_id, title, grade) VALUES
+(1, 'United States History', 87),
+(2, 'Quarterly Paper', 82),
+(4, 'To Kill a Mockingbird Paper', 94),
+(3, 'Renaissance Report', 80),
+(4, 'Favorite Activity Report', 89),
+(5, 'Renaissance Report', 40),
+(8, 'Renaissance Report', 99),
+(6, 'Art History Essay ', 74),
+(2, 'Basketball Essay', 100),
+(7, 'United States History', 0);
+
+#Q1.(CONCAT, CASE, FULL JOIN) Show 'last name, first name' & GPA. For every student with a GPA above 3.0 return 'Honor Roll', 
+    if they have no assignments turned in then 'N/A', for anything else then 'Needs Tutoring'.
+SELECT 
+  CONCAT(s.last_name, ', ', s.first_name) AS student_name
+  ,AVG(a.grade) AS average_grade
+  ,CASE 
+    WHEN AVG(a.grade) >= 85 THEN 'Honor Roll' 
+    WHEN AVG(a.grade) IS NULL THEN 'N/A'
+    ELSE 'Needs Tutoring' 
+  END Title
+FROM students s
+FULL JOIN assignments a ON a.student_id = s.id
+GROUP BY s.id
+ORDER BY average_grade desc;
+
+#Q2.(LEFT JOIN) Show only students who have completed their assignments, ordered by highest grade.
+SELECT 
+  s.first_name
+  ,a.title
+  ,a.grade
+FROM students s
+LEFT JOIN assignments a ON a.student_id = s.id
+WHERE a.title IS NOT NULL 
+  AND a.grade IS NOT NULL
+ORDER BY a.grade desc;
+
+#Q3.(AGGREGATE) Show the average grade for every student.
+SELECT 
+  s.first_name
+  ,AVG(a.grade) AS avg_grade
+FROM students s
+LEFT JOIN assignments a ON a.students_ID = s.id
+GROUP BY s.id;
