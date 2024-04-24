@@ -22,16 +22,16 @@ INSERT INTO students (first_name, last_name) VALUES
   ('Shohei', 'Ohtani');
 
 INSERT INTO assignments (student_id, title, grade) VALUES
-(1, 'United States History', 87),
-(2, 'Quarterly Paper', 82),
-(4, 'To Kill a Mockingbird Paper', 94),
-(3, 'Renaissance Report', 80),
-(4, 'Favorite Activity Report', 89),
-(5, 'Renaissance Report', 40),
-(8, 'Renaissance Report', 99),
-(6, 'Art History Essay ', 74),
-(2, 'Basketball Essay', 100),
-(7, 'United States History', 0);
+  (1, 'United States History', 87),
+  (2, 'Quarterly Paper', 82),
+  (4, 'To Kill a Mockingbird Paper', 94),
+  (3, 'Renaissance Report', 80),
+  (4, 'Favorite Activity Report', 89),
+  (5, 'Renaissance Report', 40),
+  (8, 'Renaissance Report', 99),
+  (6, 'Art History Essay ', 74),
+  (2, 'Basketball Essay', 100),
+  (7, 'United States History', 0);
 
 #Q1.(CONCAT, CASE, FULL JOIN) Show 'last name, first name' & GPA. For every student with a GPA above 3.0 return 'Honor Roll', 
     if they have no assignments turned in then 'N/A', for anything else then 'Needs Tutoring'.
