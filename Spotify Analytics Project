@@ -1,6 +1,7 @@
   # For this project, I downloaded Spotify data from Kaggle.
   # Then I created a table to insert Spotify data into.
-  # Finally, I performed analytics on the data using SQL. 
+  # Finally, I performed analytics on the data using SQL.
+  # These examples include the use of subqueries, aggregates, group by's etc.
 
   #Creating the table: 
 CREATE TABLE BIT_DB.Spotifydata (
@@ -31,9 +32,9 @@ time_signature integer NOT NULL
 SELECT
 artist_name
 ,track_name
-,avg(popularity)
-,avg(danceability)
-,avg(energy)
+,AVG(popularity)
+,AVG(danceability)
+,AVG(energy)
 FROM BIT_DB.spotifydata
 GROUP BY artist_name, track_name;
 
