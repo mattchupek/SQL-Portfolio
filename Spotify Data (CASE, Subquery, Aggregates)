@@ -1,7 +1,7 @@
   # For this project, I downloaded Spotify data from Kaggle.
   # Then I created a table to insert Spotify data into.
   # Finally, I performed analytics on the data using SQL.
-  # These examples include the use of subqueries, aggregates, group by's etc.
+  # These examples include the use of CASE function, subqueries, aggregates, and more.
 
 #Creating the table: 
 CREATE TABLE BIT_DB.Spotifydata (
@@ -24,8 +24,7 @@ CREATE TABLE BIT_DB.Spotifydata (
     duration_ms INTEGER NOT NULL,
     time_signature INTEGER NOT NULL
 );
-
-  #Then I inserted the Spotify Data .csv into the table
+  #Then I inserted the Spotify Data.csv into the table
   #Next, I explored the data answering the following questions:
 
 #Q1.(CASE FUNCTION) Print 'Popular' for artists with popularity of 90 or more, 'Well Known' for 70-89 and 'Unpopular' for 69 and below.
@@ -41,7 +40,7 @@ FROM BIT_DB.Spotifydata
 GROUP BY artist_name
 ORDER BY popularity desc;
 
-#Q2.(SUBQUERY) Then I determined which artists had a popularity lower than the average using a subquery.
+#Q2.(SUBQUERY) Determine which artists had a popularity lower than the average using a subquery.
 SELECT 
   artist_name, 
   popularity
