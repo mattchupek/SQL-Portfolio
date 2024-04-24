@@ -1,6 +1,6 @@
 /* 
-In this project, I created my own table with the top 15 wealthiest NBA owners. 
-After, I created a seperate table with more information on what they did to gain wealth and join the tables to create readable lists.
+In this project, I created a table with the top 15 wealthiest NBA owners. 
+After, I created a seperate table with information on what they did to gain wealth and join the tables to create readable lists.
 
 This project contains 3 tables with at least 15 rows in total. 
 The data is from 2020 and was sourced from Just Richest (https://justrichest.com/all-the-nba-team-owners-and-their-net-worth/) and Google searches.
@@ -8,13 +8,31 @@ The data is from 2020 and was sourced from Just Richest (https://justrichest.com
 This project includes the use of 3 tables joins, outer joins, inner joins and more.
 */
 
-
 CREATE TABLE nba_owners (
     id INTEGER PRIMARY KEY,
-    name TEXT,
+    name VARCHAR(100),
     age INTEGER,
-    gender TEXT,
-    team TEXT);
+    gender VARCHAR(10),
+    team VARCHAR(50)
+);
+
+CREATE TABLE wealth (
+    owner_id INTEGER,
+    net_worth_billion INTEGER,
+    source_wealth VARCHAR(100),
+    industry_wealth VARCHAR(100),
+    FOREIGN KEY (owner_id) REFERENCES nba_owners(id)
+);
+
+CREATE TABLE personal (
+    owner_id INTEGER,
+    relationship_status VARCHAR(50),
+    spouse_name VARCHAR(50),
+    no_of_children INTEGER,
+    college_name VARCHAR(100),
+    hobbies VARCHAR(100),
+    FOREIGN KEY (owner_id) REFERENCES nba_owners(id)
+);
     
 INSERT INTO nba_owners (id, name, age, gender, team) VALUES
     (1, "Steve Ballmer", 64, "male", "LA Clippers");
@@ -45,12 +63,7 @@ INSERT INTO nba_owners (id, name, age, gender, team) VALUES
 INSERT INTO nba_owners (id, name, age, gender, team) VALUES
     (14, "Gayle Benson", 75, "male", "New Orleans Pelicans");
     
-CREATE TABLE wealth (
-    owner_id INTEGER,
-    net_worth_billion INTEGER,
-    source_wealth TEXT,
-    industry_wealth TEXT);
-    
+
 INSERT INTO wealth (owner_id, net_worth_billion, source_wealth, industry_wealth) VALUES
     (1, 75.6, "Microsoft", "Technology");
 INSERT INTO wealth (owner_id, net_worth_billion, source_wealth, industry_wealth) VALUES
@@ -82,33 +95,6 @@ INSERT INTO wealth (owner_id, net_worth_billion, source_wealth, industry_wealth)
 INSERT INTO wealth (owner_id, net_worth_billion, source_wealth, industry_wealth) VALUES
     (15, 3.3, "Inheritance", "Diversified");    
 
---Find the net worth of each billionaire
-SELECT nba_owners.name, wealth.net_worth_billion
-FROM nba_owners
-JOIN wealth
-ON nba_owners.id = wealth.owner_id;
-
---Find the source of wealth for each owner
-SELECT nba_owners.name, wealth.source_wealth
-FROM nba_owners
-JOIN wealth
-ON nba_owners.id = wealth.id;
-
---Q: Which billionaires have a net worth of at least $30 billion from the technology industry?
-SELECT nba_owners.name, wealth.net_worth_billion, wealth.industry_wealth
-FROM nba_owners
-JOIN wealth ON nba_owners.id = wealth.owner_id
-WHERE net_worth_billion > 30 
-AND industry_wealth = "Technology";
---A: Steve Ballmer
-
-CREATE TABLE personal (
-    owner_id INTEGER,
-    relationship_status TEXT,
-    spouse_name TEXT,
-    no_of_children INTEGER,
-    college_name TEXT,
-    hobbies TEXT);
     
 INSERT INTO personal (owner_id, relationship_status, spouse_name, no_of_children, college_name, hobbies) VALUES
     (1, "married", "Connie Synder", 3, "Harvard", "watching basketball, golf");
@@ -139,16 +125,35 @@ INSERT INTO personal (owner_id, relationship_status, spouse_name, no_of_children
 INSERT INTO personal (owner_id, relationship_status, spouse_name, no_of_children, college_name, hobbies) VALUES
     (14, "married", "Jami Gertz", 3, "Georgetown", "yacht-racing");
 INSERT INTO personal (owner_id, relationship_status, spouse_name, no_of_children, college_name, hobbies) VALUES 
-    (15, "widowed", "Tom Benson", 0, "None", "Reading, Playing piano");
+    (15, "widowed", "Tom Benson", n/a, "None", "Reading, Playing piano");
     
---Outer join 
-SELECT nba_owners.name, personal.no_of_children
-FROM nba_owners
-LEFT OUTER JOIN personal
-ON nba_owners.id = personal.owner_id;
 
---Join 3+ tables
-SELECT nba_owners.name, wealth.net_worth_billion, personal.hobbies
-FROM wealth
-INNER JOIN personal ON personal.owner_id = wealth.owner_id
-INNER JOIN nba_owners ON nba_owners.id = wealth.owner_id;
+#Q1. (INNER JOIN) Find the net worth of each billionaire ordered from highest to lowest.
+SELECT name, net_worth_billion
+FROM nba_owners
+JOIN wealth ON nba_owners.id = wealth.owner_id
+ORDER BY net_worth_billion desc;
+
+#Q2. (INNER JOIN) Find the source of wealth for each owner.
+SELECT name, source_wealth
+FROM nba_owners
+JOIN wealth ON nba_owners.id = wealth.id;
+
+#Q3. (INNER JOIN) Which billionaires have a net worth of at least $30 billion from the technology industry?
+SELECT name, net_worth_billion, industry_wealth
+FROM nba_owners
+JOIN wealth ON nba_owners.id = wealth.owner_id
+WHERE net_worth_billion >= 30 
+AND industry_wealth = 'Technology';
+
+#Q4. (LEFT OUTER JOIN) Show owners and their number of kids, including those without kids.
+SELECT name, no_of_children
+FROM nba_owners
+LEFT OUTER JOIN personal ON nba_owners.id = personal.owner_id;
+
+#Q5. (3 TABLE JOIN) Show owners along with their net worth and hobbies. Order by net worth.
+SELECT n.name, w.net_worth_billion, p.hobbies
+FROM wealth w
+JOIN personal p ON p.owner_id = w.owner_id
+JOIN nba_owners n ON n.id = w.owner_id
+ORDER BY w.net_worth_billion desc;
