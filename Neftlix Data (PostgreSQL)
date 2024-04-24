@@ -2,16 +2,25 @@
 In this project, I answered 5 questions about the data showcasing the use of subqueries and JOINs.
 The project was written using the PostgreSQL dialect and utilized data from the following two Netflix datasets: */
 
-CREATE TABLE netflix_titles_info
-    ("show_id" varchar(5), "type" varchar(7), "title" varchar(58), "country" varchar(74), "date_added" timestamp, "release_year" int, "rating" varchar(5), "duration" varchar(9), "listed_in" varchar(74))
-;
+CREATE TABLE netflix_titles_info (
+  "show_id" varchar(5),
+  "type" varchar(7), 
+  "title" varchar(58), 
+  "country" varchar(74), 
+  "date_added" timestamp, 
+  "release_year" int, 
+  "rating" varchar(5), 
+  "duration" varchar(9), 
+  "listed_in" varchar(74)
+);
 
 CREATE TABLE netflix_people
-    ("show_id" varchar(5), "director" varchar(54), "cast" varchar(532))
-;
+  ("show_id" varchar(5), 
+  "director" varchar(54), 
+  "cast" varchar(532)
+);
     
-INSERT INTO netflix_titles_info
-    ("show_id", "type", "title", "country", "date_added", "release_year", "rating", "duration", "listed_in")
+INSERT INTO netflix_titles_info ("show_id","type", "title", "country", "date_added", "release_year", "rating", "duration",  "listed_in"
 VALUES
     ('s1', 'Movie', 'Dick Johnson Is Dead', 'United States', '2021-09-25 00:00:00', 2020, 'PG-13', '90 min', 'Documentaries'),
     ('s2', 'TV Show', 'Blood & Water', 'South Africa', '2021-09-24 00:00:00', 2021, 'TV-MA', '2 Seasons', 'International TV Shows | TV Dramas | TV Mysteries'),
@@ -59,31 +68,25 @@ VALUES
     ('s19', 'Adam Salky', 'Freida Pinto| Logan Marshall-Green| Robert John Burke| Megan Elisabeth Kelly| Sarah Minnich| Hayes Hargrove| Mark Sivertsen| Brandon Fierro| Antonio Valles| Clint Obenchain'),
     ('s20', NULL, 'Blanca SuÃ¡rez| IvÃ¡n Marcos| Ã“scar Casas| AdriÃ¡n Lastra| Francesc Garrido| Stefan Weinert| Julia MÃ¶ller| Alicia Chojnowski')
     ;
-    
 
-
---Q1:How many movie titles are there in the database? (movies only, not tv shows)
-
+#Q1. How many movie titles are there in the database? (movies only, not tv shows)
 SELECT count(*)
 FROM "netflix_titles_info"
 WHERE type='Movie';
 
 
---Q2:When was the most recent batch of tv shows and/or movies added to the database?
-
+#Q2. When was the most recent batch of tv shows and/or movies added to the database?
 SELECT max(date(date_added))
 FROM "netflix_titles_info";
 
 
---Q3:List all the movies and tv shows in alphabetical order.
-
+#Q3. List all the movies and tv shows in alphabetical order.
 SELECT title
 FROM "netflix_titles_info"
 ORDER BY title asc;
 
 
---Q4:Who was the Director for the movie The Starling?
-
+#Q4. Who was the Director for the movie The Starling?
 SELECT director
 FROM "netflix_titles_info" titles
 LEFT JOIN "netflix_people" people
@@ -91,8 +94,7 @@ ON titles.show_id=people.show_id
 WHERE titles.title='The Starling'
 
 
---Q5:What is the oldest movie in the database and what year was it made?
-
+#Q5. What is the oldest movie in the database and what year was it made?
 SELECT title, release_year
 FROM "netflix_titles_info"
 WHERE type = 'Movie'
