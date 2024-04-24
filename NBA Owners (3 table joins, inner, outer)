@@ -1,9 +1,11 @@
 /* 
-In this project, I'm going to create my own table with the top 15 wealthiest NBA owners. After, I will create a seperate table with more information on what they did to gain wealth and join the tables to create readable lists.
+In this project, I created my own table with the top 15 wealthiest NBA owners. 
+After, I created a seperate table with more information on what they did to gain wealth and join the tables to create readable lists.
 
-This project contains 3 tables with at least 15 rows in total. One table contains a column that relates to a PRIMARY KEY of another table. Queries using JOIN will be used for this project.
-
+This project contains 3 tables with at least 15 rows in total. 
 The data is from 2020 and was sourced from Just Richest (https://justrichest.com/all-the-nba-team-owners-and-their-net-worth/) and Google searches.
+
+This project includes the use of 3 tables joins, outer joins, inner joins and more.
 */
 
 
