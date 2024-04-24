@@ -27,6 +27,18 @@ INSERT INTO store (id, item, category, price, sales) VALUES
 (19, 'banana', 'fruits & vegetables', 3.24, 345),
 (20, 'chocolate brownie', 'pantry', 6.97, 450);
 
+#Q1.(CTE) Find the total sales revenue for each category.
+WITH category_sales AS (
+    SELECT 
+        category, 
+        SUM(price * sales) as total_revenue
+    FROM 
+        store
+    GROUP BY 
+        category
+)
+SELECT * FROM category_sales;
+
 #Q1.(Subquery) What drinks sold lower than the average drink sales?
 SELECT 
 	item
