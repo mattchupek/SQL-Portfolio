@@ -1,0 +1,79 @@
+  # For this project, I downloaded Spotify data from Kaggle.
+  # Then I created a table to insert Spotify data into.
+  # Finally, I performed analytics on the data using SQL.
+  # These examples include the use of subqueries, aggregates, group by's etc.
+
+#Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+    id INTEGER PRIMARY KEY,
+    artist_name VARCHAR(255) NOT NULL,
+    track_name VARCHAR(255) NOT NULL,
+    track_id VARCHAR(255) NOT NULL,
+    popularity INTEGER NOT NULL,
+    danceability DECIMAL(4,3) NOT NULL,
+    energy DECIMAL(4,3) NOT NULL,
+    key INTEGER NOT NULL,
+    loudness DECIMAL(5,3) NOT NULL,
+    mode INTEGER NOT NULL,
+    speechiness DECIMAL(5,4) NOT NULL,
+    acousticness DECIMAL(6,5) NOT NULL,
+    instrumentalness TEXT NOT NULL,
+    liveness DECIMAL(5,4) NOT NULL,
+    valence DECIMAL(4,3) NOT NULL,
+    tempo DECIMAL(6,3) NOT NULL,
+    duration_ms INTEGER NOT NULL,
+    time_signature INTEGER NOT NULL
+);
+
+  #Then I inserted the Spotify Data .csv into the table
+  #Next, I explored the data answering the following questions:
+
+#Q1.(CASE FUNCTION) Print 'Popular' for artists with popularity of 90 or more, 'Well Known' for 70-89 and 'Unpopular' for 69 and below.
+SELECT 
+  artist_name
+  ,popularity
+  ,CASE 
+      WHEN popularity >=90 THEN 'Popular' 
+      WHEN popularity BETWEEN 70 AND 89 THEN 'Well Known'
+      ELSE 'Unpopular'
+  END Rank
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+ORDER BY popularity desc;
+
+#Q2.(SUBQUERY) Then I determined which artists had a popularity lower than the average using a subquery.
+SELECT 
+  artist_name, 
+  popularity
+FROM BIT_DB.Spotifydata
+WHERE popularity < (
+    SELECT avg(popularity)
+    FROM spotifydata
+    )
+ORDER BY popularity desc;
+
+#Q3.(AGGREGATE) Determine the avg popularity, danceability, and energy by artist and track. 
+SELECT
+  artist_name
+  ,track_name
+  ,AVG(popularity)
+  ,AVG(danceability)
+  ,AVG(energy)
+FROM BIT_DB.spotifydata
+GROUP BY artist_name, track_name;
+
+#Q4.(AGGREGATE) Determine what song has the highest danceability.
+SELECT 
+  artist_name
+  ,track_name
+  ,AVG(danceability)
+FROM BIT_DB.spotifydata
+GROUP BY artist_name, track_name
+ORDER BY AVG(danceability) DESC;
+
+#Q5. Determine what the longest song is.
+SELECT 
+  artist_name
+  ,track_name
+FROM BIT_DB.spotifydata
+ORDER BY duration_ms DESC LIMIT 1;
