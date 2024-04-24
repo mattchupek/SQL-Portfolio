@@ -1,3 +1,6 @@
+#In this project I create 2 tables for students and assignments.
+#Then I transform the data to uncover meaningful insights about the data.
+
 CREATE TABLE students (
   id INT AUTO_INCREMENT PRIMARY KEY,
   first_name VARCHAR(100),
