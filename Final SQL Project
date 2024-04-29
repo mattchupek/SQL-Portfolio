@@ -12,12 +12,25 @@ SELECT
  ,t.milliseconds/100 as Seconds
  ,t.UnitPrice as Price
 FROM chinook.tracks t
- JOIN chinook.genres g ON g.GenreId = t.GenreId
+ LEFT JOIN chinook.genres g ON g.GenreId = t.GenreId
  JOIN chinook.albums al ON al.AlbumId = t.AlbumId
  JOIN chinook.artists ar ON ar.ArtistId = al.ArtistId
 WHERE MediaTypeId <> 3
- AND Genre IS NOT 'Rock'
+ AND Genre <> 'Rock'
 ORDER BY t.milliseconds/100 desc LIMIT 100;
+
+#Q2.(Window Function) Show each sales agent with a ranking column that ranks them by number of sales.
+SELECT 
+ e.FirstName, 
+ e.LastName, 
+ RANK() OVER (PARTITION BY title ORDER BY ROUND(SUM(i.Total),2) DESC) AS dept_rank
+FROM chinook.Employees e 
+JOIN chinook.Customers c ON c.SupportRepId = e.EmployeeId
+JOIN chinook.Invoices i ON i.CustomerId = c.CustomerId
+WHERE e.Title = 'Sales Support Agent' 
+AND i.InvoiceDate LIKE '%2009%' 
+GROUP BY e.FirstName
+ORDER BY (round(sum(i.Total), 2))  DESC;
 
 #Q2. Show the total sales made by each sales agent.
 SELECT 
@@ -64,10 +77,11 @@ FROM chinook.employees e
 #Q7. Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers.
 SELECT 
  e.LastName as rep_last
- ,e.Firstname as rep_first
+ ,e.FirstName as rep_first
  ,c.LastName as cust_last
  ,c.FirstName as cust_first
- ,c.Country, i.total
+ ,c.Country 
+ ,i.total
 FROM chinook.Employees e
  JOIN chinook.Customers c ON c.SupportRepId = e.EmployeeId
  JOIN chinook.Invoices i ON i.CustomerId = c.CustomerId
@@ -93,8 +107,7 @@ SELECT
  t.name
  ,i.InvoiceLineId
 FROM chinook.tracks t
- JOIN chinook.invoice_items i ON i.TrackId = t.TrackId
-;
+ JOIN chinook.invoice_items i ON i.TrackId = t.TrackId;
 
 #Q11. Write a query that includes the purchased track name AND artist name with each invoice line ID.
 SELECT 
@@ -113,7 +126,7 @@ SELECT
  ,m.Name AS 'Media Type' 
  ,g.Name AS 'Genre'
 FROM chinook.tracks t
- JOIN chinook.Albums a ON a.AlbumId = t.AlbumId
+ LEFT JOIN chinook.Albums a ON a.AlbumId = t.AlbumId
  JOIN chinook.Media_Types m ON m.MediaTypeId = t.MediaTypeId
  JOIN chinook.Genres g ON g.GenreId = t.GenreId;
 
