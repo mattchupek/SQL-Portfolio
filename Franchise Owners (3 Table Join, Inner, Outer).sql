@@ -7,6 +7,7 @@ The data is from 2020 and was sourced from Just Richest (https://justrichest.com
 
 This project includes the use of 3 tables joins, outer joins, inner joins and more.
 */
+
 CREATE TABLE nba_owners (
     id INTEGER PRIMARY KEY,
     name VARCHAR(100),
@@ -80,7 +81,7 @@ INSERT INTO personal (owner_id, relationship_status, spouse_name, no_of_children
     (14, "married", "Jami Gertz", 3, "Georgetown", "yacht-racing"),
     (15, "widowed", "Tom Benson", n/a, "None", "Reading, Playing piano");
 
-#Q1.(3 TABLE JOIN) Show owners along with their net worth and hobbies. Order by net worth.
+--Q1.(3 TABLE JOIN) Show owners along with their net worth and hobbies. Order by net worth.
 SELECT 
   n.name
   ,w.net_worth_billion
@@ -90,7 +91,7 @@ JOIN personal p ON p.owner_id = w.owner_id
 JOIN nba_owners n ON n.id = w.owner_id
 ORDER BY w.net_worth_billion desc;
 
-#Q2.(INNER JOIN) Find the net worth of each billionaire ordered from highest to lowest.
+--Q2.(INNER JOIN) Find the net worth of each billionaire ordered from highest to lowest.
 SELECT 
   name
   ,net_worth_billion
@@ -98,21 +99,21 @@ FROM nba_owners
 JOIN wealth ON nba_owners.id = wealth.owner_id
 ORDER BY net_worth_billion desc;
 
-#Q3.(LEFT OUTER JOIN) Show owners and their number of kids, including those without kids.
+--Q3.(LEFT OUTER JOIN) Show owners and their number of kids, including those without kids.
 SELECT 
   name
   ,no_of_children
 FROM nba_owners
 LEFT OUTER JOIN personal ON nba_owners.id = personal.owner_id;
 
-#Q4.(INNER JOIN) Find the source of wealth for each owner.
+--Q4.(INNER JOIN) Find the source of wealth for each owner.
 SELECT 
   name
   ,source_wealth
 FROM nba_owners
 JOIN wealth ON nba_owners.id = wealth.id;
 
-#Q5.(INNER JOIN) Which billionaires have a net worth of at least $30 billion from the technology industry?
+--Q5.(INNER JOIN) Which billionaires have a net worth of at least $30 billion from the technology industry?
 SELECT 
   name
   ,net_worth_billion
