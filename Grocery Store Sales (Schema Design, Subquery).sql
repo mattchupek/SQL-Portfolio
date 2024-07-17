@@ -53,7 +53,7 @@ WHERE category = 'drinks'
 GROUP BY item
 ;
 
-#Q2. What are the top 5 items that bought in the most sales? 
+--Q2. What are the top 5 items that bought in the most sales? 
 SELECT 
 	item
 	,category
@@ -62,21 +62,21 @@ SELECT
 FROM store
 ORDER BY sales desc LIMIT 5;
 
-#Q3.(Aggregate) What is the average price of items in the 'pantry' category?
+--Q3.(Aggregate) What is the average price of items in the 'pantry' category?
 SELECT 
 	AVG(price) 'pantry price'
 FROM store
 WHERE category = 'pantry';
 
-#Q4. (Aggregate) What is the total amount of items sold?
+--Q4. (Aggregate) What is the total amount of items sold?
 SELECT 
 	SUM(sales) 'total sales'
 FROM store;
 
-#Q5. Which is the most expensive item and how many sales were made?
+--Q5. Which is the most expensive item and how many sales were made?
 SELECT 
 	item
-  ,price
+	,price
 	,sales
 FROM store
 ORDER BY price desc LIMIT 1;
