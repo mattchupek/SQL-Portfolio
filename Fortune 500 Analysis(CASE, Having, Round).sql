@@ -61,7 +61,7 @@ VALUES
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
 
-#Q1. Group companies by number of employees and put them in structured tiers.
+--Q1. Group companies by number of employees and put them in structured tiers.
 SELECT 
 	company_name 
 	,CASE 
@@ -80,7 +80,7 @@ FROM fortune_companies
 GROUP BY employees
 ORDER BY employees DESC;
 
-#Q2. Assign all the companies in the Healthcare industry as "mother friendly workplace", "acceptable", or "none" based on the maternity leave offered. 
+--Q2. Assign all the companies in the Healthcare industry as "mother friendly workplace", "acceptable", or "none" based on the maternity leave offered. 
 SELECT 
 	company_name
 	,CASE 
@@ -91,7 +91,7 @@ SELECT
 FROM fortune_companies
 ORDER BY maternity_leave_weeks DESC;
 
-#Q3. Which industries have an average revenue of at least $200 Billion, and what are their average revenues?
+--Q3. Which industries have an average revenue of at least $200 Billion, and what are their average revenues?
 SELECT 
 	industry
 	,ROUND(AVG(revenue),1) as average_revenue
@@ -101,7 +101,7 @@ HAVING average_revenue >=200
 ORDER BY average_revenue desc;
 
 
-#Q4. Which companies have healthcare benefits and at least 20 paid time off days?
+--Q4. Which companies have healthcare benefits and at least 20 paid time off days?
 SELECT 
 	company_name
 	,paid_time_off_days
@@ -112,7 +112,7 @@ ORDER BY
 	paid_time_off_days desc
 	,company_name;
 
-#Q5. Which company in the Healthcare industry has the least revenue, and what's their revenue? 
+--Q5. Which company in the Healthcare industry has the least revenue, and what's their revenue? 
 SELECT 
 	company_name
 	,MIN(revenue)
