@@ -5,7 +5,7 @@ CREATE TABLE store (
       price DECIMAL(10,2), 
       sales INTEGER
 );
-
+ 
 INSERT INTO store (id, item, category, price, sales) VALUES
 (1, 'soda', 'drinks', 0.99, 470),
 (2, 'cereal', 'pantry', 5.99, 627),
