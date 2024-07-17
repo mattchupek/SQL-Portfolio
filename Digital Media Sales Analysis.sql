@@ -1,5 +1,7 @@
---In this project, I used a database called 'chinook' which contained all the records from a digital media store. The database contained 11 tables. 
---To showcase my proficiency in SQL, I answered 15 questions based on the data.
+/*
+In this project, I used a database called 'chinook' which contained all the records from a digital media store. The database contained 11 tables. 
+To showcase my proficiency in SQL, I answered 15 questions based on the data.
+ */
 
 --Q1.(4 table JOIN) What are the top 100 longest tracks? Don't include Rock and only include standard songs (not music from TV Shows, Films etc.).
 --Name the title, artist, album, genre, MediaIdType, length in Seconds, and Price.
