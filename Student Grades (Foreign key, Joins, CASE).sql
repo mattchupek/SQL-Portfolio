@@ -1,5 +1,7 @@
-#In this project I create 2 tables for students and assignments.
-#Then I transform the data to uncover meaningful insights about the data.
+/*
+In this project I create 2 tables for students and assignments.
+I then transform the data to uncover meaningful insights about the data showcasing the use of CONCAT, JOINs, and Aggregates.
+*/
 
 CREATE TABLE students (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -33,7 +35,7 @@ INSERT INTO assignments (student_id, title, grade) VALUES
   (2, 'Basketball Essay', 100),
   (7, 'United States History', 0);
 
-#Q1.(CONCAT, CASE, FULL JOIN) Show 'last name, first name' & GPA. For every student with a GPA above 3.0 return 'Honor Roll', 
+--Q1.(CONCAT, CASE, FULL JOIN) Show 'last name, first name' & GPA. For every student with a GPA above 3.0 return 'Honor Roll', 
     if they have no assignments turned in then 'N/A', for anything else then 'Needs Tutoring'.
 SELECT 
   CONCAT(s.last_name, ', ', s.first_name) AS student_name
@@ -48,7 +50,7 @@ FULL JOIN assignments a ON a.student_id = s.id
 GROUP BY s.id
 ORDER BY average_grade desc;
 
-#Q2.(LEFT JOIN) Show only students who have completed their assignments, ordered by highest grade.
+--Q2.(LEFT JOIN) Show only students who have completed their assignments, ordered by highest grade.
 SELECT 
   s.first_name
   ,a.title
@@ -59,7 +61,7 @@ WHERE a.title IS NOT NULL
   AND a.grade IS NOT NULL
 ORDER BY a.grade desc;
 
-#Q3.(AGGREGATE) Show the average grade for every student.
+--Q3.(AGGREGATE) Show the average grade for every student.
 SELECT 
   s.first_name
   ,AVG(a.grade) AS avg_grade
