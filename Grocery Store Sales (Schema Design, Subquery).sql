@@ -1,9 +1,14 @@
+/* 
+I created a table called store and insert grocery store data in it. I then used sql to determine sales statistics. 
+Some of the functions I used include: CTE's, subqueries, and more.
+*/
+
 CREATE TABLE store (
-      id INTEGER PRIMARY KEY, 
-      item VARCHAR(100), 
-      category VARCHAR(100), 
-      price DECIMAL(10,2), 
-      sales INTEGER
+	id INTEGER PRIMARY KEY, 
+  item VARCHAR(100), 
+  category VARCHAR(100), 
+  price DECIMAL(10,2), 
+  sales INTEGER
 );
  
 INSERT INTO store (id, item, category, price, sales) VALUES
@@ -27,19 +32,19 @@ INSERT INTO store (id, item, category, price, sales) VALUES
 (19, 'banana', 'fruits & vegetables', 3.24, 345),
 (20, 'chocolate brownie', 'pantry', 6.97, 450);
 
-#Q1.(CTE) Find the total sales revenue for each category.
+--Q1.(CTE) Find the total sales revenue for each category.
 WITH category_sales AS (
-    SELECT 
-        category, 
-        SUM(price * sales) as total_revenue
-    FROM 
-        store
-    GROUP BY 
-        category
+	SELECT 
+    category, 
+    SUM(price * sales) as total_revenue
+  FROM 
+    store
+  GROUP BY 
+    category
 )
 SELECT * FROM category_sales;
 
-#Q1.(Subquery) What drinks sold lower than the average drink sales?
+--Q2.(Subquery) What drinks sold lower than the average drink sales?
 SELECT 
 	item
 	,SUM(price * sales)
@@ -53,7 +58,7 @@ WHERE category = 'drinks'
 GROUP BY item
 ;
 
---Q2. What are the top 5 items that bought in the most sales? 
+--Q3. What are the top 5 items that bought in the most sales? 
 SELECT 
 	item
 	,category
@@ -62,18 +67,18 @@ SELECT
 FROM store
 ORDER BY sales desc LIMIT 5;
 
---Q3.(Aggregate) What is the average price of items in the 'pantry' category?
+--Q4.(Aggregate) What is the average price of items in the 'pantry' category?
 SELECT 
 	AVG(price) 'pantry price'
 FROM store
 WHERE category = 'pantry';
 
---Q4. (Aggregate) What is the total amount of items sold?
+--Q5. (Aggregate) What is the total amount of items sold?
 SELECT 
 	SUM(sales) 'total sales'
 FROM store;
 
---Q5. Which is the most expensive item and how many sales were made?
+--Q6. Which is the most expensive item and how many sales were made?
 SELECT 
 	item
 	,price
