@@ -50,10 +50,10 @@ SELECT
 	,SUM(price * sales)
 FROM store
 WHERE category = 'drinks'
-	AND price * sales < (
-        SELECT AVG(price * sales) 
-        FROM store
-        WHERE category = 'drinks'
+AND price * sales < (
+    	SELECT AVG(price * sales) 
+    	FROM store
+    	WHERE category = 'drinks'
         )
 GROUP BY item
 ;
